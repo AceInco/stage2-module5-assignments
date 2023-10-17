@@ -3,6 +3,7 @@ package assignments;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 import assignments.annotations.FullNameProcessorGeneratorAnnotation;
@@ -19,20 +20,23 @@ public class LocalProcessor {
     private StringBuilder processorVersion;
     private Integer valueOfCheap;
     private Scanner informationScanner;
+    private static List<String> stringList = new LinkedList<>();
 
-    public LocalProcessor(String processorName, String processorVersion, Integer valueOfCheap) {
+    public LocalProcessor(String processorName, String processorVersion, Integer valueOfCheap, List<String> stringList) {
         this.processorName = new StringBuilder(processorName);
         this.processorVersion = new StringBuilder(processorVersion);
         this.valueOfCheap = valueOfCheap;
+        LocalProcessor.stringList = stringList;
     }
 
     public LocalProcessor() {
     }
 
     @ListIteratorAnnotation
-    public void listIterator(LinkedList<String> stringList) {
-        for (String string : new LinkedList<>(stringList)) {
-            if (string != null) {
+    public void listIterator(List<String> stringList) {
+        LocalProcessor.stringList = new LinkedList<>(stringList);
+        for (String string : LocalProcessor.stringList) {
+            if(string != null) {
                 System.out.println(string.hashCode());
             }
         }
