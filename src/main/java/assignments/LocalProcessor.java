@@ -18,7 +18,7 @@ public class LocalProcessor {
     private Long period = 10_000_000_000_000L;
     private StringBuilder processorVersion;
     private Integer valueOfCheap;
-    public Scanner informationScanner;
+    private Scanner informationScanner;
 
     public LocalProcessor(String processorName, String processorVersion, Integer valueOfCheap) {
         this.processorName = new StringBuilder(processorName);
@@ -32,7 +32,8 @@ public class LocalProcessor {
     @ListIteratorAnnotation
     public void listIterator(LinkedList<String> stringList) {
         for (String i : stringList) {
-            System.out.println(i.hashCode());
+            if(i != null)
+                System.out.println(i.hashCode());
         }
     }
 
@@ -54,6 +55,10 @@ public class LocalProcessor {
         }
         catch (FileNotFoundException e){
             e.printStackTrace();
+        } finally {
+            if (informationScanner != null){
+                informationScanner.close();
+            }
         }
     }
 }
