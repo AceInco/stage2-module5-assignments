@@ -16,9 +16,9 @@ import lombok.Setter;
 public class LocalProcessor {
     private StringBuilder processorName;
     private Long period = 10_000_000_000_000L;
-    protected StringBuilder processorVersion;
+    private StringBuilder processorVersion;
     private Integer valueOfCheap;
-    Scanner informationScanner;
+    public Scanner informationScanner;
 
     public LocalProcessor(String processorName, String processorVersion, Integer valueOfCheap) {
         this.processorName = new StringBuilder(processorName);
@@ -49,12 +49,11 @@ public class LocalProcessor {
         try{
             informationScanner = new Scanner(file);
             while (informationScanner.hasNext()) {
-                processorName.append(informationScanner.nextLine());
+                processorVersion.append(informationScanner.nextLine());
             }
         }
-        catch (Exception e){
+        catch (FileNotFoundException e){
             e.printStackTrace();
         }
-
     }
 }
