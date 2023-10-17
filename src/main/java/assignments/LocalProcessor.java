@@ -31,12 +31,12 @@ public class LocalProcessor {
 
     @ListIteratorAnnotation
     public void listIterator(LinkedList<String> stringList) {
-        for (String i : stringList) {
-            if(i != null)
-                System.out.println(i.hashCode());
+        for (String string : new LinkedList<>(stringList)) {
+            if (string != null) {
+                System.out.println(string.hashCode());
+            }
         }
     }
-
     @FullNameProcessorGeneratorAnnotation
     public String fullNameProcessorGenerator(LinkedList<String> stringList) {
         for (String string : stringList) {
