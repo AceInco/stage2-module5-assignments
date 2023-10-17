@@ -14,21 +14,16 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LocalProcessor {
-    private String processorName;
+    private StringBuilder processorName;
     private Long period = 10_000_000_000_000L;
-    protected String processorVersion;
+    protected StringBuilder processorVersion;
     private Integer valueOfCheap;
     Scanner informationScanner;
-    static LinkedList<String> stringArrayList = new LinkedList<>();
 
-    public LocalProcessor(String processorName, Long period, String processorVersion, Integer valueOfCheap,
-                          Scanner informationscanner, LinkedList<String> stringArrayList) {
-        this.processorName = processorName;
-        this.period = period;
-        this.processorVersion = processorVersion;
+    public LocalProcessor(String processorName, String processorVersion, Integer valueOfCheap) {
+        this.processorName = new StringBuilder(processorName);
+        this.processorVersion = new StringBuilder(processorVersion);
         this.valueOfCheap = valueOfCheap;
-        this.informationScanner = informationscanner;
-        LocalProcessor.stringArrayList = stringArrayList;
     }
 
     public LocalProcessor() {
@@ -36,29 +31,30 @@ public class LocalProcessor {
 
     @ListIteratorAnnotation
     public void listIterator(LinkedList<String> stringList) {
-        stringArrayList = stringList;
-        for (String i : stringArrayList) {
+        for (String i : stringList) {
             System.out.println(i.hashCode());
         }
     }
 
     @FullNameProcessorGeneratorAnnotation
     public String fullNameProcessorGenerator(LinkedList<String> stringList) {
-        StringBuilder stringBuilder = new StringBuilder(processorName);
         for (String string : stringList) {
-            stringBuilder.append(string).append(' ');
+            processorName.append(string).append(' ');
         }
-        processorName = stringBuilder.toString();
-        return processorName;
+        return processorName.toString();
     }
 
     @ReadFullProcessorNameAnnotation
     public void readFullProcessorName(File file) throws FileNotFoundException {
-        informationScanner = new Scanner(file);
-        StringBuilder stringBuilder = new StringBuilder(processorVersion);
-        while (informationScanner.hasNext()) {
-            stringBuilder.append(informationScanner.nextLine());
+        try{
+            informationScanner = new Scanner(file);
+            while (informationScanner.hasNext()) {
+                processorName.append(informationScanner.nextLine());
+            }
         }
-        processorName = stringBuilder.toString();
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }
